@@ -14,7 +14,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  View,
+  View,Button
 } from 'react-native';
 
 import {
@@ -24,11 +24,14 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import  {AboutScreen, HomeScreen} from "./src/screens";
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
+const Stack = createStackNavigator();
 function Section({children, title}: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   return (
@@ -63,7 +66,16 @@ function App(): JSX.Element {
   };
 
   return ( <NavigationContainer>
-    <SafeAreaView style={backgroundStyle}>
+  {/* <HomeScreen/> */}
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" options={{
+          headerShown:false
+        }} component={HomeScreen} />
+        <Stack.Screen name="About" component={AboutScreen} />
+        {/* <Stack.Screen name="Contact" component={ContactScreen} /> */}
+      </Stack.Navigator>
+    
+    {/* <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -92,10 +104,29 @@ function App(): JSX.Element {
           <LearnMoreLinks />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView> */}
     </NavigationContainer>
   );
 }
+
+
+
+// const HomeScreen = ({ navigation }) => {
+//   return (
+//     <View>
+//       <Text>Home Screen</Text>
+//       <Button
+//         title="Go to About"
+//         onPress={() => navigation.navigate('About')}
+//       />
+//       <Button
+//         title="Go to Contact"
+//         onPress={() => navigation.navigate('Contact')}
+//       />
+//     </View>
+//   );
+// };
+
 
 const styles = StyleSheet.create({
   sectionContainer: {
